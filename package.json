@@ -1,0 +1,29 @@
+{
+  "name": "expense-tracker-api",
+  "version": "1.0.0",
+  "description": "Small Express and PostgreSQL API for tracking expenses.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --ext js,json src/server.js",
+    "db:setup": "node src/db/setup.js",
+    "check": "node --check src/server.js && node --check src/app.js && node --check src/controllers/expensesController.js && node --check src/models/expenseModel.js"
+  },
+  "keywords": [
+    "express",
+    "postgres",
+    "expenses",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
