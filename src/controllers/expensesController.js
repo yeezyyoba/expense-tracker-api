@@ -1,5 +1,6 @@
 const expenseModel = require('../models/expenseModel');
 const {
+  validateExpenseFilters,
   validateExpensePayload,
   validateExpenseUpdatePayload,
   validateId
@@ -7,7 +8,8 @@ const {
 
 async function getExpenses(req, res, next) {
   try {
-    const expenses = await expenseModel.findAll(req.query);
+    const filters = validateExpenseFilters(req.query);
+    const expenses = await expenseModel.findAll(filters);
     res.json(expenses);
   } catch (error) {
     next(error);
@@ -73,7 +75,8 @@ async function deleteExpense(req, res, next) {
 
 async function getExpenseSummary(req, res, next) {
   try {
-    const summary = await expenseModel.getSummary(req.query);
+    const filters = validateExpenseFilters(req.query);
+    const summary = await expenseModel.getSummary(filters);
     res.json(summary);
   } catch (error) {
     next(error);

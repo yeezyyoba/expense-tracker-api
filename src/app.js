@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const expensesRouter = require('./routes/expenses');
+const incomeRouter = require('./routes/income');
+const recurringExpensesRouter = require('./routes/recurringExpenses');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -16,6 +18,8 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/expenses', expensesRouter);
+app.use('/api/income', incomeRouter);
+app.use('/api/recurring-expenses', recurringExpensesRouter);
 
 app.use((req, res) => {
   res.status(404).json({

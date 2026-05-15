@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "dev": "nodemon --watch src --ext js,json src/server.js",
     "db:setup": "node src/db/setup.js",
-    "check": "node --check src/server.js && node --check src/app.js && node --check src/controllers/expensesController.js && node --check src/models/expenseModel.js"
+    "check": "node --check src/server.js && node --check src/app.js && node --check src/controllers/expensesController.js && node --check src/controllers/incomeController.js && node --check src/controllers/recurringExpensesController.js && node --check src/models/expenseModel.js && node --check src/models/incomeModel.js && node --check src/models/recurringExpenseModel.js && node --check src/routes/expenses.js && node --check src/routes/income.js && node --check src/routes/recurringExpenses.js && node --check src/validators/expenseValidator.js && node --check src/validators/incomeValidator.js && node --check src/validators/recurringExpenseValidator.js"
   },
   "keywords": [
     "express",

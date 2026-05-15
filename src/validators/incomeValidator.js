@@ -8,7 +8,7 @@ function validateId(id) {
   const parsedId = Number(id);
 
   if (!Number.isInteger(parsedId) || parsedId <= 0) {
-    throw createValidationError('Expense id must be a positive integer');
+    throw createValidationError('Income id must be a positive integer');
   }
 
   return parsedId;
@@ -33,13 +33,7 @@ function validateFilterDate(value, fieldName) {
     return undefined;
   }
 
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    throw createValidationError(`${fieldName} must be a valid date`);
-  }
-
-  return value;
+  return validateDate(value, fieldName);
 }
 
 function validateOptionalAmount(value, fieldName) {
@@ -56,7 +50,7 @@ function validateOptionalAmount(value, fieldName) {
   return amount;
 }
 
-function validateExpenseFilters(query) {
+function validateIncomeFilters(query) {
   const minAmount = validateOptionalAmount(query.minAmount, 'minAmount');
   const maxAmount = validateOptionalAmount(query.maxAmount, 'maxAmount');
 
@@ -76,13 +70,13 @@ function validateExpenseFilters(query) {
   };
 }
 
-function validateExpensePayload(body) {
-  const title = typeof body.title === 'string' ? body.title.trim() : '';
+function validateIncomePayload(body) {
+  const source = typeof body.source === 'string' ? body.source.trim() : '';
   const category = typeof body.category === 'string' ? body.category.trim() : '';
   const amount = Number(body.amount);
 
-  if (!title) {
-    throw createValidationError('Title is required');
+  if (!source) {
+    throw createValidationError('Source is required');
   }
 
   if (!category) {
@@ -94,30 +88,30 @@ function validateExpensePayload(body) {
   }
 
   return {
-    title,
+    source,
     category,
     amount,
-    expense_date: validateDate(body.expense_date, 'expense_date'),
+    income_date: validateDate(body.income_date, 'income_date'),
     notes: typeof body.notes === 'string' ? body.notes.trim() : null
   };
 }
 
-function validateExpenseUpdatePayload(body) {
-  const allowedFields = ['title', 'amount', 'category', 'expense_date', 'notes'];
+function validateIncomeUpdatePayload(body) {
+  const allowedFields = ['source', 'amount', 'category', 'income_date', 'notes'];
   const hasAllowedField = allowedFields.some((field) => body[field] !== undefined);
 
   if (!hasAllowedField) {
-    throw createValidationError('At least one expense field is required');
+    throw createValidationError('At least one income field is required');
   }
 
   const payload = {};
 
-  if (body.title !== undefined) {
-    const title = typeof body.title === 'string' ? body.title.trim() : '';
-    if (!title) {
-      throw createValidationError('Title cannot be empty');
+  if (body.source !== undefined) {
+    const source = typeof body.source === 'string' ? body.source.trim() : '';
+    if (!source) {
+      throw createValidationError('Source cannot be empty');
     }
-    payload.title = title;
+    payload.source = source;
   }
 
   if (body.category !== undefined) {
@@ -136,8 +130,8 @@ function validateExpenseUpdatePayload(body) {
     payload.amount = amount;
   }
 
-  if (body.expense_date !== undefined) {
-    payload.expense_date = validateDate(body.expense_date, 'expense_date');
+  if (body.income_date !== undefined) {
+    payload.income_date = validateDate(body.income_date, 'income_date');
   }
 
   if (body.notes !== undefined) {
@@ -148,8 +142,8 @@ function validateExpenseUpdatePayload(body) {
 }
 
 module.exports = {
-  validateExpenseFilters,
-  validateExpensePayload,
-  validateExpenseUpdatePayload,
-  validateId
+  validateId,
+  validateIncomeFilters,
+  validateIncomePayload,
+  validateIncomeUpdatePayload
 };
